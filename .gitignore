@@ -1,7 +1,7 @@
 # Dati sensibili e secrets
 info-database.txt
-v120/api/config.php
-v120/api/db.php
+api/config.php
+api/db.php
 
 # Versioni vecchie
 old/
