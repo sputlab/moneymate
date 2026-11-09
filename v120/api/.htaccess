@@ -1,0 +1,31 @@
+Options -Indexes
+RewriteEngine On
+
+# PASSA L'HEADER AUTHORIZATION A PHP
+RewriteCond %{HTTP:Authorization} ^(.+)$
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+# Proteggi i file interni
+RewriteRule ^(db\.php|auth_helpers\.php)$ - [R=403,L]
+
+# Blocca l'accesso al file .htaccess stesso
+<Files ".htaccess">
+    Require all denied
+</Files>
+
+# REWRITE PER GLI ENDPOINT AUTH
+RewriteRule ^auth/register$      auth.php?action=register [QSA,L]
+RewriteRule ^auth/login$         auth.php?action=login [QSA,L]
+RewriteRule ^auth/me$            auth.php?action=me [QSA,L]
+RewriteRule ^auth/profile$       auth.php?action=profile [QSA,L]
+RewriteRule ^auth/account$       auth.php?action=account [QSA,L]
+RewriteRule ^auth/forgot$        auth.php?action=forgot [QSA,L]
+RewriteRule ^auth/reset$         auth.php?action=reset [QSA,L]
+
+# REWRITE PER CATEGORIE
+RewriteRule ^categories$                        categories.php [QSA,L]
+RewriteRule ^categories/(\d+)$                 categories.php?id=$1 [QSA,L]
+
+# REWRITE PER TRANSAZIONI
+RewriteRule ^transactions$                     transactions.php [QSA,L]
+RewriteRule ^transactions/(\d+)$               transactions.php?id=$1 [QSA,L]
